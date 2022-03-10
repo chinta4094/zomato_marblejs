@@ -12,7 +12,7 @@ const authentication = async(body : tokenObj) => {
 
 const logoutUser = async () => {
     const findUser = await tokenSchema.find({})
-    const deleteUserToken = await tokenSchema.deleteOne({ "userName" : `${findUser[0].userName}`})
+    const deleteUserToken = await tokenSchema.deleteOne({ "userName" : `${findUser[0].userName}` })
     return `Logout Successfully`
 }
 

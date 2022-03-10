@@ -1,9 +1,9 @@
 import { requestValidator$, t } from "@marblejs/middleware-io";
 
-const tokenItemValidation = requestValidator$({
+const validateToken = requestValidator$({
     headers : t.type({
         token : t.string
     })
 })
 
-export default tokenItemValidation
+export default validateToken
