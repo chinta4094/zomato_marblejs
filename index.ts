@@ -3,7 +3,7 @@ import { IO } from 'fp-ts/lib/IO';
 import listener from './listener/httpListener';
 import mongoose from 'mongoose';
 
-mongoose.connect("mongodb://localhost:27017/Dummy",(err) : void => {
+mongoose.connect("mongodb://localhost:27017/Marblejs",(err) : void => {
     if(!err){
        return console.log("CONNECTED TO DB!")
     }else{

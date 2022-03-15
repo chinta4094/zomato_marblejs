@@ -7,12 +7,13 @@ import userSchema from "../../../schemas/userSchema";
 
 const addToCart = async (item : string) =>{
     const findUser = await tokenSchema.find({})
-    const findCart = await cartSchema.find({ "itemName" : `${item}`, "userName" : `${findUser[0].userName}` })
-    if(findCart.length == 0){
+    var findCart = await cartSchema.find({ "itemName" : `${item}`, "userName" : `${findUser[0].userName}` })
+    var findItem = await itemSchema.find({ "name" : `${item}` })
+    if(findCart.length === 0){
         const createItem = {
-            userName : findCart[0].userName,
+            userName : findUser[0].userName,
             itemName : item,
-            itemCost : findCart[0].cost,
+            itemCost : findItem[0].cost,
             quantity : 1
         }
         const addToCart = await cartSchema.create(createItem)

@@ -1,4 +1,5 @@
 import { HttpStatus } from '@marblejs/http';
+import sendmail from '../../email/email'
 import userSchema from '../../schemas/userSchema';
 
 type userObj = { firstName : string, lastName : string, userName : string, email : string, password : string }
@@ -13,6 +14,7 @@ const postUser = async (body : userObj) => {
           }
         }else{
           var createUser = await userSchema.create(body)
+          sendmail(body.userName,body.email)
           if(createUser){
             return {
               status : HttpStatus.OK,

@@ -1,16 +1,14 @@
 import { HttpStatus } from "@marblejs/http";
 import cartSchema from "../../../schemas/cartSchema";
-import itemSchema from "../../../schemas/itemSchema";
 import tokenSchema from "../../../schemas/tokenSchema";
-import userSchema from "../../../schemas/userSchema";
 
-const removeFromCart = async (item : string) =>{
+const removeFromCart = async (item : string) => {
     const findUser = await tokenSchema.find({})
     const findCart = await cartSchema.find({ "itemName" : `${item}`, "userName" : `${findUser[0].userName}` })
     if(findCart[0].quantity > 1){
         const updateCart = await cartSchema.updateOne(
             {"userName" : `${findCart[0].userName}`,"itemName" : item},
-            {$set : {"quantity" : --findCart[0].quantity}}
+            { $set : {"quantity" : --findCart[0].quantity} }
         )
         return {
             status : HttpStatus.OK,
