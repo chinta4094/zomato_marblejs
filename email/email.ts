@@ -1,8 +1,9 @@
 import nodeMailer from 'nodemailer'
 import 'dotenv/config'
+import { string } from 'fp-ts'
 
 //the arrow function used to send the mail to register emialid
-export = (userName: any,toEmail: any) => {
+export = (userName: string,toEmail: string) => {
     const fromEmail = process.env.ACCESS_EMAIL_ID
     const password = process.env.ACCESS_PASSWORD_ID
     const transporter = nodeMailer.createTransport({

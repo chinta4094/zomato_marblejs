@@ -1,27 +1,17 @@
-import { mergeMap,map, catchError } from "rxjs/operators";
-import { createServer, combineRoutes, httpListener, r, HttpError, HttpStatus } from '@marblejs/http';
+import { mergeMap,map } from "rxjs/operators";
+import { combineRoutes, r} from '@marblejs/http';
 import { getItemById, getItemCollection } from "../../../controllers/user/item/getItem";
 import { pipe } from "fp-ts/lib/function";
 import 'dotenv/config'
-import jwt from 'jsonwebtoken';
+import authentication from '../../../authentication/authToken'
 import getItemValidation from "../../../validations/item/validateItemParams";
-import tokenItemValidation from "../../../validations/item/validateToken"
-import userCarts$ from '../item/itemRouter'
-
-
-type tokenObj = { token : string }
-const authentication = async(body : tokenObj) => {
-  const verifyAuth = jwt.verify(body.token,`${process.env.TOKEN}`)
-  return verifyAuth
-}
 
 const getItem$ = r.pipe(
     r.matchPath('/'),
     r.matchType('GET'),
     r.useEffect(req$ => req$.pipe(
-        tokenItemValidation,
         mergeMap(req => pipe(
-          authentication(req.headers as tokenObj)
+          authentication(req)
         )),
         mergeMap(getItemCollection),
         map(body => ({ body }))
@@ -32,6 +22,9 @@ const getItemByUser$ = r.pipe(
     r.matchPath('/:name'),
     r.matchType('GET'),
     r.useEffect(req$ => req$.pipe(
+      mergeMap(req => pipe(
+        authentication(req)
+      )),
       getItemValidation,
       map(req => pipe(
         getItemById(req.params.name)

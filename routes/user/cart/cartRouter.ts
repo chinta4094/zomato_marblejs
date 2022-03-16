@@ -2,18 +2,11 @@ import { mergeMap, map } from "rxjs/operators";
 import { combineRoutes, r } from '@marblejs/http';
 import { pipe } from "fp-ts/lib/function";
 import 'dotenv/config'
-import jwt from 'jsonwebtoken';
-import addToCart from "../../../../controllers/user/cart/addToCart";
-import addToCartValidation from "../../../../validations/cart/validateAddToCart";
-import getCartDetails from "../../../../controllers/user/cart/getCartDetails";
-import removeFromCart from "../../../../controllers/user/cart/removeFromCart";
-
-type tokenObj = { token : string }
-
-const authentication = async(body: any) => {
-    const verifyAuth = jwt.verify(body.headers.token,`${process.env.TOKEN}`)
-      return body
-}
+import addToCart from "../../../controllers/user/cart/addToCart";
+import getCartDetails from "../../../controllers/user/cart/getCartDetails";
+import removeFromCart from "../../../controllers/user/cart/removeFromCart";
+import authentication from "../../../authentication/authToken";
+import addToCartValidation from "../../../validations/cart/validateAddToCart";
 
 const addToCart$ = r.pipe(
     r.matchPath('/add/:item'),
@@ -64,3 +57,5 @@ const userCart$ = combineRoutes('/cart',[
 ])
 
 export default userCart$
+
+

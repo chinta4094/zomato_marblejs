@@ -1,11 +1,11 @@
-import { combineRoutes, httpListener } from "@marblejs/http";
+import { httpListener } from "@marblejs/http";
 import { logger$ } from "@marblejs/middleware-logger";
 import { bodyParser$ } from "@marblejs/middleware-body";
 import api$ from "../routes";
 
 const middlewares = [
     logger$(),
-    bodyParser$(),
+    bodyParser$()
 ]
 
 const effects = [

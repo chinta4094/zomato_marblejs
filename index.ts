@@ -2,6 +2,7 @@ import { createServer } from '@marblejs/http';
 import { IO } from 'fp-ts/lib/IO';
 import listener from './listener/httpListener';
 import mongoose from 'mongoose';
+import promoSchema from './schemas/promoSchema'
 
 mongoose.connect("mongodb://localhost:27017/Marblejs",(err) : void => {
     if(!err){

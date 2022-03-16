@@ -7,31 +7,39 @@ import userSchema from "../../../schemas/userSchema";
 
 const addToCart = async (item : string) =>{
     const findUser = await tokenSchema.find({})
-    var findCart = await cartSchema.find({ "itemName" : `${item}`, "userName" : `${findUser[0].userName}` })
-    var findItem = await itemSchema.find({ "name" : `${item}` })
-    if(findCart.length === 0){
-        const createItem = {
-            userName : findUser[0].userName,
-            itemName : item,
-            itemCost : findItem[0].cost,
-            quantity : 1
-        }
-        const addToCart = await cartSchema.create(createItem)
-        return {
-            status : HttpStatus.OK,
-            message : `Successfully ${createItem.itemName} Added To Cart`,
-            quantity : createItem.quantity
+    if(findUser.length != 0){
+        var findCart = await cartSchema.find({ "itemName" : `${item}`, "userName" : `${findUser[0].userName}` })
+        var findItem = await itemSchema.find({ "name" : `${item}` })
+        if(findItem.length != 0){
+            if(findCart.length === 0){
+                const createItem = {
+                    userName : findUser[0].userName,
+                    itemName : item,
+                    itemCost : findItem[0].cost,
+                    quantity : 1
+                }
+                const addToCart = await cartSchema.create(createItem)
+                return {
+                    status : HttpStatus.OK,
+                    message : `Successfully ${createItem.itemName} Added To Cart`,
+                    quantity : createItem.quantity
+                }
+            }else{
+                const updateCart = await cartSchema.updateOne(
+                    {"userName" : `${findCart[0].userName}`,"itemName" : item},
+                    {$set : {"quantity" : ++findCart[0].quantity}}
+                )
+                return {
+                    status : HttpStatus.OK,
+                    message : `Successfully ${findCart[0].itemName} Added To Cart`,
+                    quantity : findCart[0].quantity
+                }
+            }
+        }else{
+            return `Item ${item} is Not Found In Item List`
         }
     }else{
-        const updateCart = await cartSchema.updateOne(
-            {"userName" : `${findCart[0].userName}`,"itemName" : item},
-            {$set : {"quantity" : ++findCart[0].quantity}}
-        )
-        return {
-            status : HttpStatus.OK,
-            message : `Successfully ${findCart[0].itemName} Added To Cart`,
-            quantity : findCart[0].quantity
-        }
+        return `User Not Logged In`
     }
 }
 
