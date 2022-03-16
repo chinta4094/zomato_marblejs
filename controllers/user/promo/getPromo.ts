@@ -12,7 +12,8 @@ const getPromo = async() => {
             filterPromo[i] = {
                 promoCode : getPromo[i].promoCode,
                 startDate : getPromo[i].startDate,
-                endDate : getPromo[i].endDate
+                endDate : getPromo[i].endDate,
+                discount : getPromo[i].discount
             }
         }
         return {
