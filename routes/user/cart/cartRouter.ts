@@ -12,9 +12,6 @@ const addToCart$ = r.pipe(
     r.matchPath('/add/:item'),
     r.matchType('POST'),
     r.useEffect(req$ => req$.pipe(
-        mergeMap(req => pipe(
-            authentication(req)
-        )),
         addToCartValidation,
         mergeMap(req => pipe(
             addToCart(req.params.item)

@@ -22,9 +22,9 @@ const getItemByUser$ = r.pipe(
     r.matchPath('/:name'),
     r.matchType('GET'),
     r.useEffect(req$ => req$.pipe(
-      mergeMap(req => pipe(
-        authentication(req)
-      )),
+      // mergeMap(req => pipe(
+      //   authentication(req)
+      // )),
       getItemValidation,
       map(req => pipe(
         getItemById(req.params.name)

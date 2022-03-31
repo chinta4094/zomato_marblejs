@@ -36,7 +36,10 @@ const addToCart = async (item : string) =>{
                 }
             }
         }else{
-            return `Item ${item} is Not Found In Item List`
+            return {
+                status : HttpStatus.BAD_GATEWAY,
+                message : `Item ${item} is Not Found In Item List`
+            }
         }
     }else{
         return `User Not Logged In`

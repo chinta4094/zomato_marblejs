@@ -6,12 +6,11 @@ import 'dotenv/config'
 type loginObj = { userName : string, password : string }
 
 const token = (user : string) => {
-    const Token = jwt.sign({ userName : user },`${process.env.TOKEN}`)
+    const Token = jwt.sign({ userName : user },`secret`)
     return Token
 }
 
 const loginUser = async (body : loginObj) => {
-    try{
         const findByUsername = await userSchema.find({
              "userName" : `${body.userName}`
         })
@@ -24,18 +23,18 @@ const loginUser = async (body : loginObj) => {
             status : HttpStatus.BAD_REQUEST,
             message : `UserName Not Found, pls Create Account ... `
           }
-        }else{
+        }
+        else{
             if(findpassword.length != 0){
                 const findToken = await tokenSchema.find({})
                 if(findToken.length == 0){
                     const createToken = await tokenSchema.create({
                         userName : body.userName,
-                        token : token(body.userName)
+                        token : 'secret'
                     })
                     return {
                         status : HttpStatus.OK,
-                        message : `Login Successfull`,
-                        toke : token(body.userName)
+                        message : `Login Successful`
                     }
                 }else{
                     if(findToken[0].userName === body.userName){
@@ -45,8 +44,7 @@ const loginUser = async (body : loginObj) => {
                         )
                         return {
                             status : HttpStatus.OK,
-                            message : `Login Successfull`,
-                            token : token(body.userName)
+                            message : `Login Successfull`
                         }
                     }else{
                         return {
@@ -63,9 +61,6 @@ const loginUser = async (body : loginObj) => {
                 }
             }
         }
-    }catch (error){
-        return error
-    }
 }
 
 export default loginUser

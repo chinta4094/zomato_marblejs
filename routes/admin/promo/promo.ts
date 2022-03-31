@@ -14,7 +14,7 @@ const promo$ = r.pipe(
     r.matchPath('/'),
     r.matchType('POST'),
     r.useEffect(req$ => req$.pipe(
-        mergeMap(req => authentication(req)),
+        // mergeMap(req => authentication(req)),
         mergeMap(req => createPromo(req.body as promoObj)),
         map(body => ({ body }))
     ))

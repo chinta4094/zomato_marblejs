@@ -4,6 +4,7 @@ import authentication from "../../../authentication/authToken";
 import addPromoToCart from '../../../controllers/user/promo/addPromo'
 import removePromoToCart from '../../../controllers/user/promo/removePromo'
 import getPromo from "../../../controllers/user/promo/getPromo";
+import validatePromoParam from "../../../validations/promo/validatePromoParam";
 
 type promoObj = { promoCode : string , startDate : Date, endDate : Date, discount : number }
 
@@ -11,7 +12,8 @@ const addPromo$ = r.pipe(
     r.matchPath('/addPromo/:promoCode'),
     r.matchType('POST'),
     r.useEffect(req$ => req$.pipe(
-        mergeMap(req => authentication(req)),
+        // mergeMap(req => authentication(req)),
+        validatePromoParam,
         mergeMap(req => addPromoToCart(req.params.promoCode)),
         map(body => ({ body }))
     ))
