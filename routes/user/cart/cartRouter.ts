@@ -24,9 +24,9 @@ const removeFromCart$ = r.pipe(
     r.matchPath('/remove/:item'),
     r.matchType('DELETE'),
     r.useEffect(req$ => req$.pipe(
-        mergeMap(req => pipe(
-            authentication(req)
-        )),
+        // mergeMap(req => pipe(
+        //     authentication(req)
+        // )),
         addToCartValidation,
         mergeMap(req => pipe(
             removeFromCart(req.params.item)

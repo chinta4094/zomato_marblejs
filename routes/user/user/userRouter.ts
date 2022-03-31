@@ -45,7 +45,7 @@ const updateuser$ = r.pipe(
   r.matchPath('/Changepassword'),
   r.matchType('PUT'),
   r.useEffect(req$ => req$.pipe(
-    mergeMap(req => authentication(req)),
+    // mergeMap(req => authentication(req)),
     mergeMap(req => updateUser(req.body as passwordObj)),
     map(body => ({ body }))
   ))

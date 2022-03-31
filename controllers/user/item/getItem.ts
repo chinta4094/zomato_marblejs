@@ -23,20 +23,24 @@ const getItemCollection = async () => {
 }
   
 const getItemById = async (item: any) => {
-    var findById = await itemSchema.find({ "name" : `${item.params.name}` })
-    if(findById.length != 0){
-      return {
-        status : HttpStatus.OK,
-        details : {
-          name : findById[0].name,
-          cost : findById[0].cost
+    try{
+      var findById = await itemSchema.find({ "name" : `${item.params.name}` })
+      if(findById.length != 0){
+        return {
+          status : HttpStatus.OK,
+          details : {
+            name : findById[0].name,
+            cost : findById[0].cost
+          }
+        }
+      }else{
+        return{
+          status : HttpStatus.BAD_REQUEST,
+          message : `No Item With name ${item.params.name}`
         }
       }
-    }else{
-      return{
-        status : HttpStatus.BAD_REQUEST,
-        message : `No Item With name ${item.params.name}`
-      }
+    }catch (error){
+      throw(error)
     }
 }
 export { getItemCollection, getItemById }

@@ -23,7 +23,7 @@ const getPromo$ = r.pipe(
     r.matchPath(''),
     r.matchType('GET'),
     r.useEffect(req$ => req$.pipe(
-        mergeMap(req => authentication(req)),
+        // mergeMap(req => authentication(req)),
         mergeMap(getPromo),
         map(body => ({ body }))
     ))
