@@ -16,9 +16,15 @@ const updateUser = async (body : userObj) => {
                 }
             )
             const deleteUser = await tokenSchema.deleteOne({ "userName" : finduser[0].userName })
-            return `updated Successfully, Pls Login ... `
+            return {
+                status : HttpStatus.OK,
+                message : `updated Successfully, Pls Login ... `
+            }
         }else{
-            return `Old Password is Wrong`
+            return {
+                status : HttpStatus.BAD_REQUEST,
+                message :`Old Password is Wrong`
+            }
         }
     }else{
         return `User Not Logged In`

@@ -213,8 +213,6 @@ describe("Zomato TestCase", () => {
 		expect(response.body.status).toEqual(400);
 	});
 
-
-
 	it('POST "/api/v1/user/cart" should not get cart details because no items in cart', async () => {
 		const { request } = await testBedSetup.useTestBed();
 		const response = await pipe(
@@ -415,6 +413,35 @@ describe("Zomato TestCase", () => {
 		expect(response.body.status).toEqual(400);
 	});
 
+	it('POST "/api/v1/user/changePassword" reset password', async () => {
+		const { request } = await testBedSetup.useTestBed();
+		const response = await pipe(
+			request("PUT"),
+			request.withPath("/api/v1/user/changePassword"),
+			request.withBody({
+				oldPassword : "Bhaskar18",
+				newPassword : "Bhaskar4094"
+			}),
+			request.send,
+		);
+		console.log(response)
+		expect(response.body.status).toEqual(200);
+	});
+
+	it('POST "/api/v1/user/login" login after password change', async () => {
+		const { request } = await testBedSetup.useTestBed();
+		const response = await pipe(
+			request("POST"),
+			request.withPath("/api/v1/user/login"),
+			request.withBody({
+				userName : "Bhaskar4094",
+				password : "Bhaskar4094"
+			}),
+			request.send,
+		);
+		expect(response.body.status).toEqual(200);
+	});
+
 	it('POST "/api/v1/user/logout" should logout', async () => {
 		const { request } = await testBedSetup.useTestBed();
 		const response = await pipe(
@@ -423,6 +450,21 @@ describe("Zomato TestCase", () => {
 			request.send,
 		);
 		expect(response.body.status).toEqual(200);
+	});
+
+	it('POST "/api/v1/user/changePassword" reset password', async () => {
+		const { request } = await testBedSetup.useTestBed();
+		const response = await pipe(
+			request("PUT"),
+			request.withPath("/api/v1/user/changePassword"),
+			request.withBody({
+				oldPassword : "Bhaskar18",
+				newPassword : "Bhaskar4094"
+			}),
+			request.send,
+		);
+		console.log(response)
+		expect(response.body).toEqual('User Not Logged In');
 	});
 
 	it('POST "/api/v1/user/logout" should not logout beacuse no user logged in to logout', async () => {
@@ -474,4 +516,5 @@ describe("Zomato TestCase", () => {
 		);
 		expect(response.body).toEqual('User Not Logged In');
 	});
+
 });
