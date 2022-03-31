@@ -39,9 +39,9 @@ const getCart$ = r.pipe(
     r.matchPath('/'),
     r.matchType('GET'),
     r.useEffect(req$ => req$.pipe(
-        mergeMap(req => pipe(
-            authentication(req)
-        )),
+        // mergeMap(req => pipe(
+        //     authentication(req)
+        // )),
         mergeMap(getCartDetails),
         map(body => ({ body }))
     ))

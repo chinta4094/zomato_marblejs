@@ -33,7 +33,8 @@ const removePromo$ = r.pipe(
     r.matchPath('/removePromo/:promoCode'),
     r.matchType('DELETE'),
     r.useEffect(req$ => req$.pipe(
-        mergeMap(req => authentication(req)),
+        // mergeMap(req => authentication(req)),
+        validatePromoParam,
         mergeMap(req => removePromoToCart(req.params.promoCode)),
         map(body => ({ body }))
     ))
