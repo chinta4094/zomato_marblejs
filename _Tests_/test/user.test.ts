@@ -477,7 +477,7 @@ describe("Zomato TestCase", () => {
 		expect(response.body.status).toEqual(400);
 	});
 
-	it('POST "/api/v1/user/promo/addPromo/:promoCode" should not add promo beacuse no user logged in to logout', async () => {
+	it('POST "/api/v1/user/promo/addPromo/:promoCode" should not add promo beacuse no user logged in to add promocode', async () => {
 		const { request } = await testBedSetup.useTestBed();
 		const response = await pipe(
 			request("POST"),
@@ -487,7 +487,7 @@ describe("Zomato TestCase", () => {
 		expect(response.body).toEqual('User Not Logged In');
 	});
 
-	it('POST "/api/v1/user/promo/removePromo/:promoCode" should not remove promo beacuse no user logged in to logout', async () => {
+	it('POST "/api/v1/user/promo/removePromo/:promoCode" should not remove promo beacuse no user logged in to remove promocode', async () => {
 		const { request } = await testBedSetup.useTestBed();
 		const response = await pipe(
 			request("DELETE"),
@@ -497,7 +497,7 @@ describe("Zomato TestCase", () => {
 		expect(response.body).toEqual('User Not Logged In');
 	});
 
-	it('POST "/api/v1/user/cart" should not get cart details beacuse no user logged in to logout', async () => {
+	it('POST "/api/v1/user/cart" should not get cart details beacuse no user logged in to get cart details', async () => {
 		const { request } = await testBedSetup.useTestBed();
 		const response = await pipe(
 			request("GET"),
@@ -507,7 +507,7 @@ describe("Zomato TestCase", () => {
 		expect(response.body).toEqual('User Not Logged In');
 	});
 
-	it('POST "/api/v1/user/cart" should not get item details beacuse no user logged in to logout', async () => {
+	it('POST "/api/v1/user/cart" should not get item details beacuse no user logged in to item details', async () => {
 		const { request } = await testBedSetup.useTestBed();
 		const response = await pipe(
 			request("GET"),
