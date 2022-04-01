@@ -34,10 +34,16 @@ const getCartDetails = async () => {
                     totalAmount : totalAmount - findDiscount[0].discount
                 }
             }else{
-                return `Pls Add PromoCode For Discount`
+                return {
+                    status : HttpStatus.BAD_REQUEST,
+                    message : `Pls Add PromoCode For Discount`
+                }
             }
         }else{
-            return `No Item In Cart`
+            return {
+                status : HttpStatus.BAD_REQUEST,
+                message : `No Item In Cart`
+            }
         }
     }else{
         return `User Not Logged In`

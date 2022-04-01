@@ -6,6 +6,7 @@ import { pipe } from "fp-ts/lib/function";
 import loginUser from "../../../controllers/user/loginUser";
 import logoutUser  from "../../../controllers/user/logoutUser";
 import authentication from "../../../authentication/authToken";
+import { validateUser } from '../../../validations/user/validateCreateUser'
 // import items$ from '../item/itemRouter'
 
 type userObj = { firstName : string, lastName : string, userName : string, email : string, password : string }
@@ -44,7 +45,7 @@ const updateuser$ = r.pipe(
   r.matchPath('/Changepassword'),
   r.matchType('PUT'),
   r.useEffect(req$ => req$.pipe(
-    mergeMap(req => authentication(req)),
+    // mergeMap(req => authentication(req)),
     mergeMap(req => updateUser(req.body as passwordObj)),
     map(body => ({ body }))
   ))

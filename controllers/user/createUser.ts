@@ -18,7 +18,7 @@ const postUser = async (body : userObj) => {
             }
           }else{
             var createUser = await userSchema.create(body)
-            sendmail(body.userName,body.email)
+            // sendmail(body.userName,body.email)
             if(createUser){
               return {
                 status : HttpStatus.OK,
@@ -32,7 +32,10 @@ const postUser = async (body : userObj) => {
             }
           }
         }else{
-          return `To Create Account, You Need To Logout First ...`
+          return {
+            status : HttpStatus.BAD_REQUEST,
+            message : `To Create Account, You Need To Logout First ...`
+          }
         }
       }catch(error){
         return error

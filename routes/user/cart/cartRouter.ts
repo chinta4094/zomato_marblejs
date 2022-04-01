@@ -12,9 +12,6 @@ const addToCart$ = r.pipe(
     r.matchPath('/add/:item'),
     r.matchType('POST'),
     r.useEffect(req$ => req$.pipe(
-        mergeMap(req => pipe(
-            authentication(req)
-        )),
         addToCartValidation,
         mergeMap(req => pipe(
             addToCart(req.params.item)
@@ -27,9 +24,9 @@ const removeFromCart$ = r.pipe(
     r.matchPath('/remove/:item'),
     r.matchType('DELETE'),
     r.useEffect(req$ => req$.pipe(
-        mergeMap(req => pipe(
-            authentication(req)
-        )),
+        // mergeMap(req => pipe(
+        //     authentication(req)
+        // )),
         addToCartValidation,
         mergeMap(req => pipe(
             removeFromCart(req.params.item)
@@ -42,9 +39,9 @@ const getCart$ = r.pipe(
     r.matchPath('/'),
     r.matchType('GET'),
     r.useEffect(req$ => req$.pipe(
-        mergeMap(req => pipe(
-            authentication(req)
-        )),
+        // mergeMap(req => pipe(
+        //     authentication(req)
+        // )),
         mergeMap(getCartDetails),
         map(body => ({ body }))
     ))

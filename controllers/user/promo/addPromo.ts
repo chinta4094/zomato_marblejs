@@ -43,10 +43,16 @@ const addPromoToCart = async (promo : string) => {
                     }
                 }
             }else{
-                return `Promo Already Exist, To Add Another Promo. Remove This ${promo} First`
+                return {
+                    status : 400,
+                    message : `Promo Already Exist, To Add Another Promo. Remove This ${promo} First`
+                }
             }
         }else{
-            return `No Item In Cart To Add PromoCode`
+            return {
+                status : 200,
+                message : `No Item In Cart To Add PromoCode`
+            }
         }
     }else{
         return `User Not Logged In`
